@@ -1,0 +1,207 @@
+$black: #000;
+$lightBlack: rgba(0, 0, 0, 0.3);
+$white: #fff;
+$red: #ed1c24;
+$green: #28a745;
+$blue: #007bff;
+$yellow: #ffc107;
+$sky: #17a2b8;
+$dark: #343a40;
+
+body {
+  margin: 0;
+  font-size: 16px;
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  &:focus,
+  &:hover {
+    outline: none;
+  }
+}
+
+a {
+  text-decoration: none;
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  > * {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .col-8 {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+  }
+  .col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .col-4 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+  }
+  .col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+  .col-2 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+.alignCenter {
+  align-items: center;
+}
+
+//button
+.btn {
+  color: $white;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  &.red {
+    background-color: $red;
+  }
+  &.green {
+    background-color: $green;
+  }
+  &.blue {
+    background-color: $blue;
+  }
+  &.yellow {
+    background-color: $yellow;
+  }
+  &.sky {
+    background-color: $sky;
+  }
+  &.dark {
+    background-color: $dark;
+  }
+}
+
+//input
+input {
+  font-size: 1em;
+  padding: 5px 10px;
+  border: 1px solid $lightBlack;
+}
+
+input[type="file"] {
+  max-width: 200px;
+}
+
+//text
+.text-center {
+  text-align: center;
+}
+.text-red {
+  color: $red;
+}
+.text-green {
+  color: $green;
+}
+.text-blue {
+  color: $blue;
+}
+.text-yellow {
+  color: $yellow;
+}
+.text-sky {
+  color: $sky;
+}
+.text-dark {
+  color: $dark;
+}
+.text {
+  &.red {
+    color: $red;
+  }
+  &.green {
+    color: $green;
+  }
+  &.blue {
+    color: $blue;
+  }
+  &.yellow {
+    color: $yellow;
+  }
+  &.sky {
+    color: $sky;
+  }
+  &.dark {
+    color: $dark;
+  }
+}
+.text-uppercase {
+  text-transform: uppercase;
+}
+.bold {
+  font-weight: 700;
+}
+
+//space
+.mt-10 {
+  margin-top: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+.box-block-border {
+  padding: 15px;
+  border: 1px solid $lightBlack;
+}
+
+.group-header {
+  padding: 20px;
+  border: 1px solid #000;
+}
+.member-card {
+  padding: 20px;
+  border: 1px solid #000;
+}
+.choose-answer {
+  padding: 10px 0;
+}
+.btn-question {
+  padding: 20px;
+  border: 1px solid $blue;
+  cursor: pointer;
+  &:hover {
+    background-color: $sky;
+  }
+}
