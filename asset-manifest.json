@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/giaoli/static/css/main.ec4138d6.chunk.css",
+    "main.js": "/giaoli/static/js/main.c7720dd8.chunk.js",
+    "main.js.map": "/giaoli/static/js/main.c7720dd8.chunk.js.map",
+    "runtime~main.js": "/giaoli/static/js/runtime~main.106cfd6c.js",
+    "runtime~main.js.map": "/giaoli/static/js/runtime~main.106cfd6c.js.map",
+    "static/js/2.357a3b62.chunk.js": "/giaoli/static/js/2.357a3b62.chunk.js",
+    "static/js/2.357a3b62.chunk.js.map": "/giaoli/static/js/2.357a3b62.chunk.js.map",
+    "index.html": "/giaoli/index.html",
+    "precache-manifest.a13df2c7966d5a7462b801e62e5875cd.js": "/giaoli/precache-manifest.a13df2c7966d5a7462b801e62e5875cd.js",
+    "service-worker.js": "/giaoli/service-worker.js",
+    "static/css/main.ec4138d6.chunk.css.map": "/giaoli/static/css/main.ec4138d6.chunk.css.map"
+  }
+}
