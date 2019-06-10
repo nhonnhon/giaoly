@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "34efc979dc5a02ff8ccf0ec41006d920",
+    "revision": "f44638fd7cc90a3a0fe5d37d7f1691b0",
     "url": "/giaoly/index.html"
   },
   {
-    "revision": "a1a200fb86d6986c6515",
+    "revision": "5ffbd833524f2692a2b6",
     "url": "/giaoly/static/css/main.ec4138d6.chunk.css"
   },
   {
-    "revision": "1090b4acb5ab63e3da75",
-    "url": "/giaoly/static/js/2.357a3b62.chunk.js"
+    "revision": "d1d479e2133e73ffb5d6",
+    "url": "/giaoly/static/js/2.0825d6d0.chunk.js"
   },
   {
-    "revision": "a1a200fb86d6986c6515",
-    "url": "/giaoly/static/js/main.c7720dd8.chunk.js"
+    "revision": "5ffbd833524f2692a2b6",
+    "url": "/giaoly/static/js/main.8e7d5c8a.chunk.js"
   },
   {
     "revision": "9f86d33e8d1b02d5694a",
