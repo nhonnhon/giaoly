@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/giaoly/static/css/main.ec4138d6.chunk.css",
-    "main.js": "/giaoly/static/js/main.23107398.chunk.js",
-    "main.js.map": "/giaoly/static/js/main.23107398.chunk.js.map",
+    "main.js": "/giaoly/static/js/main.c94f637d.chunk.js",
+    "main.js.map": "/giaoly/static/js/main.c94f637d.chunk.js.map",
     "runtime~main.js": "/giaoly/static/js/runtime~main.cb27eda2.js",
     "runtime~main.js.map": "/giaoly/static/js/runtime~main.cb27eda2.js.map",
-    "static/js/2.03aefcca.chunk.js": "/giaoly/static/js/2.03aefcca.chunk.js",
-    "static/js/2.03aefcca.chunk.js.map": "/giaoly/static/js/2.03aefcca.chunk.js.map",
+    "static/js/2.a66e4638.chunk.js": "/giaoly/static/js/2.a66e4638.chunk.js",
+    "static/js/2.a66e4638.chunk.js.map": "/giaoly/static/js/2.a66e4638.chunk.js.map",
     "index.html": "/giaoly/index.html",
-    "precache-manifest.f7cbf2fc2028e9048d310a8054bd9c5d.js": "/giaoly/precache-manifest.f7cbf2fc2028e9048d310a8054bd9c5d.js",
+    "precache-manifest.349a4745fb9e6f92b7002a8c3e68ea5a.js": "/giaoly/precache-manifest.349a4745fb9e6f92b7002a8c3e68ea5a.js",
     "service-worker.js": "/giaoly/service-worker.js",
     "static/css/main.ec4138d6.chunk.css.map": "/giaoly/static/css/main.ec4138d6.chunk.css.map"
   }
