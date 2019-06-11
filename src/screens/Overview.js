@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 // import routes from "../configs/routes";
 import { lang } from "../configs/lang";
-import { saveDataGroupAndPoints } from "../actions/index";
+import { saveDataGroupAndPoints, setCurrentMember } from "../actions/index";
 import _ from "lodash";
 import * as types from "../configs/constant";
 import routes from "../configs/routes";
@@ -12,6 +12,7 @@ import routes from "../configs/routes";
 class Overview extends Component {
   static propTypes = {
     saveDataGroupAndPoints: PropTypes.func,
+    setCurrentMember: PropTypes.func,
     dataGroupPoint: PropTypes.array,
     history: PropTypes.any
   };
@@ -24,13 +25,14 @@ class Overview extends Component {
   }
 
   clickMember = (key, groupName, level, totalPoint, currentMemberPoint) => {
-    this.props.history.push(routes.ListGroupQuestion, {
+    this.props.setCurrentMember({
       id: key,
       groupName: groupName,
       level: `level${level + 1}`,
       totalPoint: totalPoint,
       currentMemberPoint: currentMemberPoint
     });
+    this.props.history.push(routes.ListGroupQuestion);
   };
 
   renderGroupAndPoints = () => {
@@ -111,7 +113,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  saveDataGroupAndPoints
+  saveDataGroupAndPoints,
+  setCurrentMember
 };
 
 export default connect(

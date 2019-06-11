@@ -22,4 +22,16 @@ function savePointQuestion(point) {
   };
 }
 
-export { saveDataGroupAndPoints, saveQuestionData, savePointQuestion };
+function setCurrentMember(data) {
+  return {
+    type: types.CURRENT_MEMBER,
+    payload: data
+  };
+}
+
+export {
+  saveDataGroupAndPoints,
+  saveQuestionData,
+  savePointQuestion,
+  setCurrentMember
+};

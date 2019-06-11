@@ -21,7 +21,9 @@ class ListGroupQuestion extends Component {
     savePointQuestion: PropTypes.func,
     listAllQuestion: PropTypes.any,
     pointEachQuestion: PropTypes.number,
-    dataGroupPoint: PropTypes.array
+    dataGroupPoint: PropTypes.array,
+    currentMember: PropTypes.object,
+    history: PropTypes.any
   };
 
   constructor(props) {
@@ -31,28 +33,33 @@ class ListGroupQuestion extends Component {
       currentListQuestion: [],
       currentQuestion: {},
       currentCorrect: "",
-      currentGroupPoint: this.props.location.state.totalPoint,
-      currentMemberPoint: this.props.location.state.currentMemberPoint
+      currentGroupPoint: this.props.currentMember.totalPoint,
+      currentMemberPoint: this.props.currentMember.currentMemberPoint
     };
   }
 
   componentDidMount() {
-    const { level } = this.props.location.state;
-    const listAllQuestion = JSON.parse(localStorage.getItem(level));
-    const groupAndPoint = JSON.parse(
-      localStorage.getItem(types.dataGroupPoint)
-    );
-    const pointEachQuestion = JSON.parse(
-      localStorage.getItem(types.pointEachQuestion)
-    );
-    this.props.savePointQuestion(pointEachQuestion);
-    this.props.saveDataGroupAndPoints(groupAndPoint);
-    this.props.saveQuestionData(listAllQuestion);
+    const { currentMember } = this.props;
+    if (_.isEmpty(currentMember)) {
+      this.props.history.push(routes.Overview);
+    } else {
+      const { level } = this.props.currentMember;
+      const listAllQuestion = JSON.parse(localStorage.getItem(level));
+      const groupAndPoint = JSON.parse(
+        localStorage.getItem(types.dataGroupPoint)
+      );
+      const pointEachQuestion = JSON.parse(
+        localStorage.getItem(types.pointEachQuestion)
+      );
+      this.props.savePointQuestion(pointEachQuestion);
+      this.props.saveDataGroupAndPoints(groupAndPoint);
+      this.props.saveQuestionData(listAllQuestion);
+    }
   }
 
   componentDidUpdate() {
     const { listAllQuestion } = this.props;
-    const { level } = this.props.location.state;
+    const { level } = this.props.currentMember;
     localStorage.removeItem(level);
     localStorage.setItem(level, JSON.stringify(listAllQuestion));
   }
@@ -101,7 +108,7 @@ class ListGroupQuestion extends Component {
       currentMemberPoint: newPointMember
     });
 
-    const { groupName, level, id } = this.props.location.state;
+    const { groupName, level, id } = this.props.currentMember;
     const { dataGroupPoint } = this.props;
     //get index of group change point
     const indexGroup = _.findIndex(
@@ -171,7 +178,7 @@ class ListGroupQuestion extends Component {
 
   render() {
     console.log(this.props); // eslint-disable-line
-    const { groupName, id, level } = this.props.location.state;
+    const { groupName, id, level } = this.props.currentMember;
     const {
       showListGroupQuestion,
       currentGroupPoint,
@@ -215,7 +222,8 @@ const mapStateToProps = state => {
   return {
     listAllQuestion: state.common.toJS().listAllQuestion,
     dataGroupPoint: state.common.toJS().dataGroupPoint,
-    pointEachQuestion: state.common.toJS().pointEachQuestion
+    pointEachQuestion: state.common.toJS().pointEachQuestion,
+    currentMember: state.common.toJS().currentMember
   };
 };
 

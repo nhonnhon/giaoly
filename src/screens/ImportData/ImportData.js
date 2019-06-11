@@ -162,9 +162,6 @@ class ImportData extends Component {
         <Link className="btn blue" to={routes.Overview}>
           {lang.overview}
         </Link>
-        <Link className="btn blue" to={routes.ListGroupQuestion}>
-          {lang.level}
-        </Link>
       </div>
     );
   }

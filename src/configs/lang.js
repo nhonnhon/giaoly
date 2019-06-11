@@ -29,6 +29,8 @@ export const lang = {
   //level
   level1: "cấp độ 1",
   level2: "cấp độ 2",
+  level3: "cấp độ 3",
+  level4: "cấp độ 4",
 
   //group
   group1: "Nhóm 1",
