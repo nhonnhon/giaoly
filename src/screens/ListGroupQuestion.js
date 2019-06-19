@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { lang } from "../configs/lang";
 import _ from "lodash";
-import { Link } from "react-router-dom";
 import routes from "../configs/routes";
 import {
   saveQuestionData,
@@ -29,6 +28,7 @@ class ListGroupQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      countQuestion: 0,
       showListGroupQuestion: true,
       currentListQuestion: [],
       currentQuestion: {},
@@ -67,19 +67,21 @@ class ListGroupQuestion extends Component {
   renderGroupQuestion = () => {
     const { listAllQuestion } = this.props;
     return (
-      <div className="row">
-        {_.map(listAllQuestion, (data, index) => (
-          <div className="col-2 mt-20 mb-20" key={index}>
-            <div
-              className="btn-question text-uppercase bold text-center"
-              onClick={() => {
-                this.showQuestion(data.listQuestion);
-              }}
-            >
-              {data.groupQuestionName}
+      <div className="list-group-question">
+        <div className="row">
+          {_.map(listAllQuestion, (data, index) => (
+            <div className="col-3 mt-40 mb-40" key={index}>
+              <div
+                className="btn-question text-uppercase bold text-center"
+                onClick={() => {
+                  this.showQuestion(data.listQuestion);
+                }}
+              >
+                <h4>{data.groupQuestionName}</h4>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   };
@@ -142,10 +144,11 @@ class ListGroupQuestion extends Component {
   };
 
   nextQuestion = () => {
-    const { currentListQuestion } = this.state;
+    const { currentListQuestion, countQuestion } = this.state;
     this.setState(
       {
-        currentCorrect: ""
+        currentCorrect: "",
+        countQuestion: countQuestion + 1
       },
       () => {
         this.showQuestion(currentListQuestion);
@@ -178,40 +181,49 @@ class ListGroupQuestion extends Component {
 
   render() {
     console.log(this.props); // eslint-disable-line
-    const { groupName, id, level } = this.props.currentMember;
+    const { groupName, /*id,*/ level } = this.props.currentMember;
     const {
       showListGroupQuestion,
       currentGroupPoint,
-      currentMemberPoint
+      currentMemberPoint,
+      countQuestion
     } = this.state;
     return (
       <div className="container">
-        <h1>{lang.selectGroupQuestion}</h1>
-        <h2 className="mt-20">{`${lang.levelQuestion} ${lang[level]}`}</h2>
-        <div className="row">
-          <div className="col-6">
-            <h3 className="mt-20">
-              {`${lang[id]}: `}
-              <span className="text-green">{currentMemberPoint}</span>
-            </h3>
+        <div className="mt-40 mb-40">
+          <h1 className={`text-center ${level} mb-40`}>
+            {_.toUpper(`Bộ câu hỏi ${lang[level]}`)}
+          </h1>
+          <div className="row alignCenter">
+            <div className="col-4">
+              <h3 className="mt-40 mb-40">
+                {`Số câu hỏi đã thi: `}
+                <span className="text-sky point-circle">{countQuestion}</span>
+              </h3>
+            </div>
+            <div className="col-4">
+              <h3 className="mt-40 mb-40">
+                {`Điểm ${lang[groupName]}: `}
+                <span className="text-red point-circle">
+                  {currentGroupPoint}
+                </span>
+              </h3>
+            </div>
+            <div className="col-4">
+              <h3 className="mt-40 mb-40">
+                {`Điểm thành viên: `}
+                <span className="text-green point-circle">
+                  {currentMemberPoint}
+                </span>
+              </h3>
+            </div>
           </div>
-          <div className="col-6">
-            <h3 className="mt-20">
-              {`${lang[groupName]}: `}
-              <span className="text-red">{currentGroupPoint}</span>
-            </h3>
-          </div>
-        </div>
 
-        {showListGroupQuestion ? (
-          <div className="mt-20">{this.renderGroupQuestion()}</div>
-        ) : (
-          <div>{this.showCurrentListQuestion()}</div>
-        )}
-        <div className="mt-20">
-          <Link className="btn blue" to={routes.Overview}>
-            {lang.backOverview}
-          </Link>
+          {showListGroupQuestion ? (
+            <div className="mt-20">{this.renderGroupQuestion()}</div>
+          ) : (
+            <div>{this.showCurrentListQuestion()}</div>
+          )}
         </div>
       </div>
     );

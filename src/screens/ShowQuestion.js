@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { lang } from "../configs/lang";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import routes from "../configs/routes";
 
 class ShowQuestion extends Component {
   static propTypes = {
@@ -11,50 +12,114 @@ class ShowQuestion extends Component {
     nextQuestion: PropTypes.func
   };
 
+  state = {
+    correct: {
+      a: "",
+      b: "",
+      c: "",
+      d: ""
+    }
+  };
+
+  showCorrectQuestion = choose => {
+    const { correct } = this.props.currentQuestion;
+    if (correct === choose) {
+      this.setState({
+        correct: {
+          ...this.state.correct,
+          ...{ [choose]: "correct-answer" }
+        }
+      });
+    } else {
+      this.setState({
+        correct: {
+          ...this.state.correct,
+          ...{ [choose]: "error-answer" }
+        }
+      });
+    }
+  };
+
+  nextQuestion = () => {
+    this.setState(
+      {
+        correct: {
+          a: "",
+          b: "",
+          c: "",
+          d: ""
+        }
+      },
+      () => {
+        this.props.nextQuestion();
+      }
+    );
+  };
+
   render() {
-    const {
-      currentQuestion,
-      currentCorrect,
-      showCorrectQuestion,
-      plusPointForMemberAndGroup,
-      nextQuestion
-    } = this.props;
-    const {
-      question,
-      chooseA,
-      chooseB,
-      chooseC,
-      chooseD,
-      correct
-    } = currentQuestion;
+    const { currentQuestion, plusPointForMemberAndGroup } = this.props;
+
+    const { question, chooseA, chooseB, chooseC, chooseD } = currentQuestion;
+    const { a, b, c, d } = this.state.correct;
     return (
       <div className="mt-40">
-        <div>
-          <h3 className="choose-answer">{question}</h3>
-          <div
-            className={`choose-answer ${
-              currentCorrect === "a" ? "text-blue bold" : ""
-            }`}
-          >{`A. ${chooseA}`}</div>
-          <div
-            className={`choose-answer ${
-              currentCorrect === "b" ? "text-blue bold" : ""
-            }`}
-          >{`B. ${chooseB}`}</div>
-          <div
-            className={`choose-answer ${
-              currentCorrect === "c" ? "text-blue bold" : ""
-            }`}
-          >{`C. ${chooseC}`}</div>
-          <div
-            className={`choose-answer ${
-              currentCorrect === "d" ? "text-blue bold" : ""
-            }`}
-          >{`D. ${chooseD}`}</div>
-          <div className="choose-answer">{`correct. ${correct}`}</div>
+        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+          <h3 className="question-detail">{question}</h3>
+          <div className="row">
+            <div className="col-6">
+              <div
+                className={`choose-answer ${a}`}
+                onClick={() => this.showCorrectQuestion("a")}
+              >{`A. ${chooseA}`}</div>
+            </div>
+            <div className="col-6">
+              <div
+                className={`choose-answer ${b}`}
+                onClick={() => this.showCorrectQuestion("b")}
+              >{`B. ${chooseB}`}</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-6">
+              <div
+                className={`choose-answer ${c}`}
+                onClick={() => this.showCorrectQuestion("c")}
+              >{`C. ${chooseC}`}</div>
+            </div>
+            <div className="col-6">
+              <div
+                className={`choose-answer ${d}`}
+                onClick={() => this.showCorrectQuestion("d")}
+              >{`D. ${chooseD}`}</div>
+            </div>
+          </div>
         </div>
         <div className="mt-40">
-          {currentCorrect === "" ? (
+          <div style={{ maxWidth: "250px", margin: "0 auto" }}>
+            <div className="row">
+              <div>
+                <input
+                  type="button"
+                  className="btn green"
+                  value={"+"}
+                  onClick={plusPointForMemberAndGroup}
+                />
+              </div>
+              <div>
+                <input
+                  type="button"
+                  className="btn blue"
+                  value={">>"}
+                  onClick={this.nextQuestion}
+                />
+              </div>
+              <div>
+                <Link className="btn blue" to={routes.Overview}>
+                  {"<<<"}
+                </Link>
+              </div>
+            </div>
+            {/* {currentCorrect === "" ? (
             <div>
               <input
                 type="button"
@@ -69,7 +134,7 @@ class ShowQuestion extends Component {
                 <input
                   type="button"
                   className="btn green"
-                  value={lang.plusPoint}
+                  value={"+"}
                   onClick={plusPointForMemberAndGroup}
                 />
               </div>
@@ -77,12 +142,13 @@ class ShowQuestion extends Component {
                 <input
                   type="button"
                   className="btn blue"
-                  value={lang.nextQuestion}
+                  value={">>"}
                   onClick={nextQuestion}
                 />
               </div>
             </div>
-          )}
+          )} */}
+          </div>
         </div>
       </div>
     );

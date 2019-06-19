@@ -19,7 +19,6 @@ class ImportQuestion extends PureComponent {
       var workbook = XLSX.read(data, {
         type: "binary"
       });
-
       var worksheet = workbook.SheetNames;
       var worksheetLength = worksheet.length;
       var datas = [];

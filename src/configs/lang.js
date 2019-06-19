@@ -23,47 +23,19 @@ export const lang = {
 
   //trang chủ
   dashboard: "Trang chủ",
-  overview: "Tổng quan",
+  overview: "Tổng quan các đội chơi",
   backOverview: "Quay về trang tổng quan",
 
   //level
-  level1: "cấp độ 1",
-  level2: "cấp độ 2",
-  level3: "cấp độ 3",
-  level4: "cấp độ 4",
+  level1: "Khai tâm",
+  level2: "Rước lễ",
+  level3: "Thêm sức",
+  level4: "Bao đồng",
 
-  //group
-  group1: "Nhóm 1",
-  group2: "Nhóm 2",
-  group3: "Nhóm 3",
-  group4: "Nhóm 4",
-  group5: "Nhóm 5",
-
-  //member
-  member1: "Thành viên 1",
-  member1_1: "Thành viên 1_1",
-  member1_2: "Thành viên 1_2",
-  member1_3: "Thành viên 1_3",
-
-  member2: "Thành viên 2",
-  member2_1: "Thành viên 2_1",
-  member2_2: "Thành viên 2_2",
-  member2_3: "Thành viên 2_3",
-
-  member3: "Thành viên 3",
-  member3_1: "Thành viên 3_1",
-  member3_2: "Thành viên 3_2",
-  member3_3: "Thành viên 3_3",
-
-  member4: "Thành viên 4",
-  member4_1: "Thành viên 4_1",
-  member4_2: "Thành viên 4_2",
-  member4_3: "Thành viên 4_3",
-
-  member5: "Thành viên 5",
-  member5_1: "Thành viên 5_1",
-  member5_2: "Thành viên 5_2",
-  member5_3: "Thành viên 5_3",
+  group1: "đội 1",
+  group2: "đội 2",
+  group3: "đội 3",
+  group4: "đội 4",
 
   //alert
   alertProvideData: "Dữ liệu chưa được nhập đầy đủ",

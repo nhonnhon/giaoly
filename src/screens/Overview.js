@@ -9,6 +9,13 @@ import _ from "lodash";
 import * as types from "../configs/constant";
 import routes from "../configs/routes";
 
+const memberMapping = {
+  0: "Khai tâm",
+  1: "Rước lễ",
+  2: "Thêm sức",
+  3: "Bao đồng"
+};
+
 class Overview extends Component {
   static propTypes = {
     saveDataGroupAndPoints: PropTypes.func,
@@ -44,7 +51,7 @@ class Overview extends Component {
             <div className="group-header">
               <div className="row alignCenter">
                 <div className="col-8">
-                  <h3>{lang[data.groupName]}</h3>
+                  <h3>{`Đội ${index + 1}`}</h3>
                 </div>
                 <div className="col-4 text-center">
                   <div className="total-point bold text-red">
@@ -69,7 +76,7 @@ class Overview extends Component {
     Object.keys(member).map(
       (key, index) =>
         key !== "levelName" && (
-          <div className="member-card" key={index}>
+          <div className={`member-card bold level-${level + 1}`} key={index}>
             <div
               className="row alignCenter"
               onClick={() =>
@@ -77,9 +84,11 @@ class Overview extends Component {
               }
             >
               <div className="col-8">
-                <div>{lang[key]}</div>
+                <div>
+                  {memberMapping[level]} {index > 1 && index}
+                </div>
               </div>
-              <div className="col-4 text-center bold text-green">
+              <div className="col-4 text-center bold">
                 <div>{member[key]}</div>
               </div>
             </div>
@@ -91,15 +100,17 @@ class Overview extends Component {
     const { dataGroupPoint } = this.props;
     return (
       <div className="container">
-        <h1>{lang.overview}</h1>
-        <div className="mt-20">
-          {dataGroupPoint && dataGroupPoint.length ? (
-            <div className="row text-uppercase">
-              {this.renderGroupAndPoints()}
-            </div>
-          ) : (
-            <div>{"Data chưa được nhập"}</div>
-          )}
+        <div className="mt-40 mb-40">
+          <h1 className="text-center">{lang.overview}</h1>
+          <div className="mt-40">
+            {dataGroupPoint && dataGroupPoint.length ? (
+              <div className="row text-uppercase">
+                {this.renderGroupAndPoints()}
+              </div>
+            ) : (
+              <div>{"Data chưa được nhập"}</div>
+            )}
+          </div>
         </div>
       </div>
     );
