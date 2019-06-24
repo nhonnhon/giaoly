@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import routes from "./configs/routes";
 import "./App.css";
 import ImportData from "./screens/ImportData/ImportData";
-import Dashboard from "./screens/Dashboard";
 import Overview from "./screens/Overview";
 import ListGroupQuestion from "./screens/ListGroupQuestion";
+import background from "../src/assets/images/background.jpg";
 
 class App extends Component {
   // static propTypes = {
@@ -34,12 +34,17 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Route path="/" exact component={Dashboard} />
-        <Route path={routes.ImportData} component={ImportData} />
-        <Route path={routes.Overview} component={Overview} />
-        <Route path={routes.ListGroupQuestion} component={ListGroupQuestion} />
-      </Router>
+      <div>
+        <Router>
+          <Route path="/" exact component={ImportData} />
+          <Route path={routes.Overview} component={Overview} />
+          <Route
+            path={routes.ListGroupQuestion}
+            component={ListGroupQuestion}
+          />
+        </Router>
+        <img className="backgroundImage" src={background} />
+      </div>
     );
   }
 }

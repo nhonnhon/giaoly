@@ -10,7 +10,18 @@
     background-color: #ed1c24; } }
 body {
   margin: 0;
-  font-size: 16px; }
+  font-size: 16px;
+  height: 100vh;
+  position: relative; }
+
+.backgroundImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid #28a745;
+  border-radius: 10px;
+  height: 650px; }
 
 * {
   outline: none;
@@ -26,10 +37,13 @@ a {
     text-decoration: none; }
 
 .container {
-  max-width: 1200px;
+  max-width: 1138px;
   margin: 0 auto;
   padding-left: 15px;
-  padding-right: 15px; }
+  padding-right: 15px;
+  position: relative;
+  z-index: 2;
+  padding-top: 50px; }
 
 .row {
   display: flex;

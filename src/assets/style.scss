@@ -30,6 +30,18 @@ $pink: pink;
 body {
   margin: 0;
   font-size: 16px;
+  height: 100vh;
+  position: relative;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid $green;
+  border-radius: 10px;
+  height: 650px;
 }
 
 * {
@@ -51,10 +63,13 @@ a {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1138px;
   margin: 0 auto;
   padding-left: 15px;
   padding-right: 15px;
+  position: relative;
+  z-index: 2;
+  padding-top: 50px;
 }
 
 .row {

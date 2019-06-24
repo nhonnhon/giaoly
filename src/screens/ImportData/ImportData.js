@@ -120,7 +120,7 @@ class ImportData extends Component {
     const { amountLevel } = this.state;
     return (
       <div className="container">
-        <h1 className="text-center mt-20">{lang.importData}</h1>
+        <h1 className="text-center">{lang.importData}</h1>
         <div className="row mt-40">
           <div className="col-3">
             <ImportNumber
@@ -151,17 +151,22 @@ class ImportData extends Component {
         ) : null}
 
         <div className="mt-40">
-          <input
-            type="button"
-            className="btn green"
-            value={lang.saveAll}
-            onClick={this.saveAllData}
-          />
+          <div className="row">
+            <div>
+              <input
+                type="button"
+                className="btn green"
+                value={lang.saveAll}
+                onClick={this.saveAllData}
+              />
+            </div>
+            <div>
+              <Link className="btn blue" to={routes.Overview}>
+                {lang.overview}
+              </Link>
+            </div>
+          </div>
         </div>
-
-        <Link className="btn blue" to={routes.Overview}>
-          {lang.overview}
-        </Link>
       </div>
     );
   }
