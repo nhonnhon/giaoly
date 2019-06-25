@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import {
   DATA_GROUP_POINT,
   SAVE_ALL_QUESTION,
-  POINT_EACH_QUESTION,
+  TIME_ALL,
   CURRENT_MEMBER
 } from "../configs/constant";
 
@@ -12,7 +12,6 @@ const initialState = fromJS({
     currentAmountGroup: 0,
     currentAmountLevel: 0
   },
-  pointEachQuestion: 10,
   dataGroupPoint: [],
   listAllQuestion: {},
   currentMember: {}
@@ -26,8 +25,8 @@ function common(state = initialState, { type, payload }) {
     case SAVE_ALL_QUESTION:
       return state.set("listAllQuestion", payload);
 
-    case POINT_EACH_QUESTION:
-      return state.set("pointEachQuestion", payload);
+    case TIME_ALL:
+      return state.set("timeAll", payload);
 
     case CURRENT_MEMBER:
       return state.set("currentMember", payload);

@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-// import routes from "../configs/routes";
 import { lang } from "../configs/lang";
 import { saveDataGroupAndPoints, setCurrentMember } from "../actions/index";
 import _ from "lodash";
 import * as types from "../configs/constant";
 import routes from "../configs/routes";
-
-const memberMapping = {
-  0: "Khai tâm",
-  1: "Rước lễ",
-  2: "Thêm sức",
-  3: "Bao đồng"
-};
+import khaitam from "../assets/images/khaitam.png";
+import ruocle from "../assets/images/ruocle.png";
+import themsuc from "../assets/images/themsuc.png";
+import baodong from "../assets/images/baodong.png";
 
 class Overview extends Component {
   static propTypes = {
@@ -22,6 +19,10 @@ class Overview extends Component {
     setCurrentMember: PropTypes.func,
     dataGroupPoint: PropTypes.array,
     history: PropTypes.any
+  };
+
+  state = {
+    currentGroup: 0
   };
 
   componentDidMount() {
@@ -42,73 +43,76 @@ class Overview extends Component {
     this.props.history.push(routes.ListGroupQuestion);
   };
 
-  renderGroupAndPoints = () => {
-    const { dataGroupPoint } = this.props;
-    return _.map(dataGroupPoint, (data, index) => {
-      return (
-        <div key={index} className="col-3">
-          <div className="group-card">
-            <div className="group-header">
-              <div className="row alignCenter">
-                <div className="col-8">
-                  <h3>{`Đội ${index + 1}`}</h3>
-                </div>
-                <div className="col-4 text-center">
-                  <div className="total-point bold text-red">
-                    {data.totalPoint}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {this.renderGroup(data)}
-          </div>
-        </div>
-      );
+  changeGroup = index => {
+    this.setState({
+      currentGroup: index
     });
   };
 
-  renderGroup = ({ groupName, members, totalPoint }) =>
-    _.map(members, (member, index) =>
-      this.renderMember(member, groupName, index, totalPoint)
-    );
-
-  renderMember = (member, groupName, level, totalPoint) =>
-    Object.keys(member).map(
-      (key, index) =>
-        key !== "levelName" && (
-          <div className={`member-card bold level-${level + 1}`} key={index}>
-            <div
-              className="row alignCenter"
-              onClick={() =>
-                this.clickMember(key, groupName, level, totalPoint, member[key])
-              }
-            >
-              <div className="col-8">
-                <div>
-                  {memberMapping[level]} {index > 1 && index}
-                </div>
-              </div>
-              <div className="col-4 text-center bold">
-                <div>{member[key]}</div>
-              </div>
+  renderLevel = () => {
+    return (
+      <div className="level-to-select">
+        <div className="row">
+          <div className="col-6">
+            <div className="button-level" onClick={() => {}}>
+              <img src={khaitam} />
             </div>
           </div>
-        )
+          <div className="col-6">
+            <div className="button-level" onClick={() => {}}>
+              <img src={ruocle} />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="button-level" onClick={() => {}}>
+              <img src={themsuc} />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="button-level" onClick={() => {}}>
+              <img src={baodong} />
+            </div>
+          </div>
+        </div>
+      </div>
     );
+  };
+
+  renderGroup = () => {
+    const { dataGroupPoint } = this.props;
+    const { currentGroup } = this.state;
+    return (
+      <div className="level-to-select d-flex justtifyContentCenter mt-20">
+        {_.map(dataGroupPoint, (data, index) => (
+          <div className={`group-circle ${index === currentGroup && "active"}`}>
+            <div onClick={() => this.changeGroup(index)}>{index + 1}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   render() {
     const { dataGroupPoint } = this.props;
     return (
       <div className="container">
-        <div className="mt-40 mb-40">
-          <h1 className="text-center">{lang.overview}</h1>
+        <div className="mt-20 mb-20">
+          <h1 className="text-center">{`Chung sức cùng Giê Su`}</h1>
           <div className="mt-40">
             {dataGroupPoint && dataGroupPoint.length ? (
-              <div className="row text-uppercase">
-                {this.renderGroupAndPoints()}
+              <div>
+                {this.renderLevel()}
+                {this.renderGroup()}
               </div>
             ) : (
-              <div>{"Data chưa được nhập"}</div>
+              <div>
+                <div>{"Data chưa được nhập"}</div>
+                <div>
+                  <Link className="btn blue" to={routes.ImportData}>
+                    {lang.importData}
+                  </Link>
+                </div>
+              </div>
             )}
           </div>
         </div>

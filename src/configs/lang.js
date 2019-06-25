@@ -23,14 +23,13 @@ export const lang = {
 
   //trang chủ
   dashboard: "Trang chủ",
-  overview: "Tổng quan các đội chơi",
   backOverview: "Quay về trang tổng quan",
 
   //level
-  level1: "Khai tâm",
-  level2: "Rước lễ",
-  level3: "Thêm sức",
-  level4: "Bao đồng",
+  gl_1: "Khai tâm",
+  gl_2: "Rước lễ",
+  gl_3: "Thêm sức",
+  gl_4: "Bao đồng",
 
   group1: "đội 1",
   group2: "đội 2",

@@ -7,7 +7,7 @@ import routes from "../configs/routes";
 import {
   saveQuestionData,
   saveDataGroupAndPoints,
-  savePointQuestion
+  saveTime
 } from "../actions/index";
 import * as types from "../configs/constant";
 import ShowQuestion from "./ShowQuestion";
@@ -17,7 +17,7 @@ class ListGroupQuestion extends Component {
     location: PropTypes.object,
     saveQuestionData: PropTypes.func,
     saveDataGroupAndPoints: PropTypes.func,
-    savePointQuestion: PropTypes.func,
+    saveTime: PropTypes.func,
     listAllQuestion: PropTypes.any,
     pointEachQuestion: PropTypes.number,
     dataGroupPoint: PropTypes.array,
@@ -48,10 +48,8 @@ class ListGroupQuestion extends Component {
       const groupAndPoint = JSON.parse(
         localStorage.getItem(types.dataGroupPoint)
       );
-      const pointEachQuestion = JSON.parse(
-        localStorage.getItem(types.pointEachQuestion)
-      );
-      this.props.savePointQuestion(pointEachQuestion);
+      const timeAll = JSON.parse(localStorage.getItem(types.timeAll));
+      this.props.saveTime(timeAll);
       this.props.saveDataGroupAndPoints(groupAndPoint);
       this.props.saveQuestionData(listAllQuestion);
     }
@@ -242,7 +240,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   saveQuestionData,
   saveDataGroupAndPoints,
-  savePointQuestion
+  saveTime
 };
 
 export default connect(

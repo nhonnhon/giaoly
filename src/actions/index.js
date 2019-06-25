@@ -15,10 +15,10 @@ function saveQuestionData(data) {
   };
 }
 
-function savePointQuestion(point) {
+function saveTime(timeAll) {
   return {
-    type: types.POINT_EACH_QUESTION,
-    payload: point
+    type: types.TIME_ALL,
+    payload: timeAll
   };
 }
 
@@ -29,9 +29,4 @@ function setCurrentMember(data) {
   };
 }
 
-export {
-  saveDataGroupAndPoints,
-  saveQuestionData,
-  savePointQuestion,
-  setCurrentMember
-};
+export { saveDataGroupAndPoints, saveQuestionData, saveTime, setCurrentMember };
