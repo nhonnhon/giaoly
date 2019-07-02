@@ -9,7 +9,8 @@ class ShowQuestion extends Component {
     currentQuestion: PropTypes.object,
     showCorrectQuestion: PropTypes.func,
     plusPointForMemberAndGroup: PropTypes.func,
-    nextQuestion: PropTypes.func
+    nextQuestion: PropTypes.func,
+    handleStopTime: PropTypes.func
   };
 
   state = {
@@ -23,6 +24,7 @@ class ShowQuestion extends Component {
 
   showCorrectQuestion = choose => {
     const { correct } = this.props.currentQuestion;
+    this.props.handleStopTime();
     if (correct === choose) {
       this.setState({
         correct: {
@@ -62,8 +64,8 @@ class ShowQuestion extends Component {
     const { question, chooseA, chooseB, chooseC, chooseD } = currentQuestion;
     const { a, b, c, d } = this.state.correct;
     return (
-      <div className="mt-40">
-        <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <div>
+        <div className="mw-800">
           <h3 className="question-detail">{question}</h3>
           <div className="row">
             <div className="col-6">

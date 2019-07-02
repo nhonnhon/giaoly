@@ -19,10 +19,9 @@ class ListGroupQuestion extends Component {
     saveDataGroupAndPoints: PropTypes.func,
     saveTime: PropTypes.func,
     listAllQuestion: PropTypes.any,
-    pointEachQuestion: PropTypes.number,
-    dataGroupPoint: PropTypes.array,
     currentMember: PropTypes.object,
-    history: PropTypes.any
+    history: PropTypes.any,
+    timeAll: PropTypes.any
   };
 
   constructor(props) {
@@ -34,7 +33,8 @@ class ListGroupQuestion extends Component {
       currentQuestion: {},
       currentCorrect: "",
       currentGroupPoint: this.props.currentMember.totalPoint,
-      currentMemberPoint: this.props.currentMember.currentMemberPoint
+      currentMemberPoint: this.props.currentMember.currentMemberPoint,
+      timeAll: 0
     };
   }
 
@@ -49,10 +49,17 @@ class ListGroupQuestion extends Component {
         localStorage.getItem(types.dataGroupPoint)
       );
       const timeAll = JSON.parse(localStorage.getItem(types.timeAll));
+      this.setState({
+        timeAll: timeAll
+      });
       this.props.saveTime(timeAll);
       this.props.saveDataGroupAndPoints(groupAndPoint);
       this.props.saveQuestionData(listAllQuestion);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeInterval);
   }
 
   componentDidUpdate() {
@@ -62,20 +69,32 @@ class ListGroupQuestion extends Component {
     localStorage.setItem(level, JSON.stringify(listAllQuestion));
   }
 
+  handleTime = timeAll => {
+    this.timeInterval = setInterval(() => {
+      timeAll = timeAll - 1;
+      this.setState({ timeAll });
+    }, 1000);
+  };
+
+  handleStopTime = () => {
+    clearInterval(this.timeInterval);
+  };
+
   renderGroupQuestion = () => {
     const { listAllQuestion } = this.props;
     return (
       <div className="list-group-question">
+        <h2 className="text-center">{"chủ đề"}</h2>
         <div className="row">
           {_.map(listAllQuestion, (data, index) => (
-            <div className="col-3 mt-40 mb-40" key={index}>
+            <div className="col-6 mt-20 mb-20" key={index}>
               <div
                 className="btn-question text-uppercase bold text-center"
                 onClick={() => {
                   this.showQuestion(data.listQuestion);
                 }}
               >
-                <h4>{data.groupQuestionName}</h4>
+                <h4>{lang[data.groupQuestionName]}</h4>
               </div>
             </div>
           ))}
@@ -96,53 +115,12 @@ class ListGroupQuestion extends Component {
       currentQuestion: listQuestion[randomNumber],
       currentListQuestion: listQuestion
     });
-  };
-
-  plusPointForMemberAndGroup = () => {
-    const { currentGroupPoint, currentMemberPoint } = this.state;
-    const { pointEachQuestion } = this.props;
-    const newPointGroup = currentGroupPoint + parseInt(pointEachQuestion);
-    const newPointMember = currentMemberPoint + parseInt(pointEachQuestion);
-    this.setState({
-      currentGroupPoint: newPointGroup,
-      currentMemberPoint: newPointMember
-    });
-
-    const { groupName, level, id } = this.props.currentMember;
-    const { dataGroupPoint } = this.props;
-    //get index of group change point
-    const indexGroup = _.findIndex(
-      dataGroupPoint,
-      data => data.groupName === groupName
-    );
-    //get object of group change point
-    const findGroup = _.find(
-      dataGroupPoint,
-      data => data.groupName === groupName
-    );
-    //get list member change point
-    const findMember = _.find(
-      findGroup.members,
-      data => data.levelName === level
-    );
-    //get index of member change point
-    const indexMember = _.findIndex(
-      findGroup.members,
-      data => data.levelName === level
-    );
-    //change new point of member
-    findMember[id] = newPointMember;
-    //replace member change point
-    findGroup.members.splice(indexMember, 1, findMember);
-    // change new point of group
-    findGroup.totalPoint = newPointGroup;
-    // repace group change point
-    dataGroupPoint.splice(indexGroup, 1, findGroup);
-    localStorage.setItem(types.dataGroupPoint, JSON.stringify(dataGroupPoint));
+    this.handleTime(this.state.timeAll);
   };
 
   nextQuestion = () => {
     const { currentListQuestion, countQuestion } = this.state;
+    clearInterval(this.timeInterval);
     this.setState(
       {
         currentCorrect: "",
@@ -171,56 +149,44 @@ class ListGroupQuestion extends Component {
         currentQuestion={currentQuestion}
         currentCorrect={currentCorrect}
         showCorrectQuestion={() => this.showCorrectQuestion(id, correct)}
-        plusPointForMemberAndGroup={this.plusPointForMemberAndGroup}
         nextQuestion={this.nextQuestion}
+        handleStopTime={this.handleStopTime}
       />
     );
   };
 
   render() {
     console.log(this.props); // eslint-disable-line
-    const { groupName, /*id,*/ level } = this.props.currentMember;
     const {
-      showListGroupQuestion,
-      currentGroupPoint,
-      currentMemberPoint,
-      countQuestion
-    } = this.state;
+      currentMember: { currentGroup, level }
+    } = this.props;
+    const { showListGroupQuestion, countQuestion, timeAll } = this.state;
     return (
       <div className="container">
-        <div className="mt-40 mb-40">
-          <h1 className={`text-center ${level} mb-40`}>
-            {_.toUpper(`Bộ câu hỏi ${lang[level]}`)}
-          </h1>
-          <div className="row alignCenter">
-            <div className="col-4">
-              <h3 className="mt-40 mb-40">
-                {`Số câu hỏi đã thi: `}
-                <span className="text-sky point-circle">{countQuestion}</span>
-              </h3>
-            </div>
-            <div className="col-4">
-              <h3 className="mt-40 mb-40">
-                {`Điểm ${lang[groupName]}: `}
-                <span className="text-red point-circle">
-                  {currentGroupPoint}
-                </span>
-              </h3>
-            </div>
-            <div className="col-4">
-              <h3 className="mt-40 mb-40">
-                {`Điểm thành viên: `}
-                <span className="text-green point-circle">
-                  {currentMemberPoint}
-                </span>
-              </h3>
-            </div>
-          </div>
-
+        <div className={`${showListGroupQuestion ? "mt-40" : ""} mb-40 `}>
           {showListGroupQuestion ? (
-            <div className="mt-20">{this.renderGroupQuestion()}</div>
+            <div>
+              <h1 className="text-center">{`Chung sức cùng Giê Su`}</h1>
+              <div className="mt-20">{this.renderGroupQuestion()}</div>
+            </div>
           ) : (
-            <div>{this.showCurrentListQuestion()}</div>
+            <div>
+              <h1 className={`text-center mb-40`}>{_.toUpper(`Câu hỏi`)}</h1>
+              <div className="row alignCenter info-group mw-800 justifySpaceBetween">
+                <div className="d-flex">
+                  <h3>{`Đội: ${currentGroup + 1}`}</h3>
+                  <h3>{`Khối: ${lang[level]}`}</h3>
+                  <h3>
+                    {`Câu: `}
+                    <span className="text-white point-circle">
+                      {countQuestion}
+                    </span>
+                  </h3>
+                </div>
+                <div className="time">{timeAll}</div>
+              </div>
+              <div>{this.showCurrentListQuestion()}</div>
+            </div>
           )}
         </div>
       </div>
@@ -232,8 +198,8 @@ const mapStateToProps = state => {
   return {
     listAllQuestion: state.common.toJS().listAllQuestion,
     dataGroupPoint: state.common.toJS().dataGroupPoint,
-    pointEachQuestion: state.common.toJS().pointEachQuestion,
-    currentMember: state.common.toJS().currentMember
+    currentMember: state.common.toJS().currentMember,
+    timeAll: state.common.toJS().timeAll
   };
 };
 

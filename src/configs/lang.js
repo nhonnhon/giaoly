@@ -26,15 +26,20 @@ export const lang = {
   backOverview: "Quay về trang tổng quan",
 
   //level
-  gl_1: "Khai tâm",
-  gl_2: "Rước lễ",
-  gl_3: "Thêm sức",
-  gl_4: "Bao đồng",
+  level1: "Khai tâm",
+  level2: "Rước lễ",
+  level3: "Thêm sức",
+  level4: "Bao đồng",
 
   group1: "đội 1",
   group2: "đội 2",
   group3: "đội 3",
   group4: "đội 4",
+
+  vhnt: "Văn hoá \n nghệ thuật",
+  khoahocxahoi: "Khoa học \nxã hội",
+  giaoly: "Giáo lý",
+  dovuidomeo: "Đố vui \nđố mẹo",
 
   //alert
   alertProvideData: "Dữ liệu chưa được nhập đầy đủ",

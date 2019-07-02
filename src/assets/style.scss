@@ -81,10 +81,6 @@ a {
   display: flex;
 }
 
-.justtifyContentCenter {
-  justify-content: center;
-}
-
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -117,6 +113,14 @@ a {
 }
 .alignCenter {
   align-items: center;
+}
+
+.justifySpaceBetween {
+  justify-content: space-between;
+}
+
+.justtifyContentCenter {
+  justify-content: center;
 }
 
 //button
@@ -289,7 +293,7 @@ h1 {
 
 .point-circle {
   border-radius: 10px;
-  padding: 10px 15px;
+  padding: 4px 15px;
   border: 1px solid;
   margin-left: 10px;
 }
@@ -297,8 +301,7 @@ h1 {
 .btn-question {
   padding: 20px;
   cursor: pointer;
-  width: 150px;
-  height: 150px;
+  margin: 0 20px;
   position: relative;
   display: flex;
   align-items: center;
@@ -311,7 +314,7 @@ h1 {
     right: 0;
     bottom: 0;
     background-color: $yellow;
-    transform: rotate(45deg);
+    transform: scale(1);
     transition: transform 0.3s;
     border-radius: 10px;
     border: 2px solid $blue;
@@ -321,14 +324,24 @@ h1 {
   }
   &:hover {
     &:before {
-      transform: rotate(0);
+      transform: scale(1.2);
     }
   }
 }
 
 .list-group-question {
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 600px;
+  h2 {
+    margin-top: 60px;
+    line-height: 120px;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background-color: $green;
+    color: #fff;
+    text-transform: uppercase;
+  }
 }
 
 .question-detail {
@@ -404,4 +417,16 @@ h1 {
   &:hover {
     background-color: $yellow;
   }
+}
+
+.info-group {
+  h3 {
+    color: #fff;
+    padding: 10px 20px;
+  }
+}
+
+.mw-800 {
+  max-width: 800px;
+  margin: 0 auto;
 }

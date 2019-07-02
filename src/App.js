@@ -43,7 +43,7 @@ class App extends Component {
             component={ListGroupQuestion}
           />
         </Router>
-        <img className="backgroundImage" src={background} />
+        <img className="backgroundImage" src={background} alt="image1" />
       </div>
     );
   }

@@ -79,7 +79,7 @@ class ImportData extends Component {
           {_.map([1, 2, 3, 4], data => (
             <div key={data} className="col-3 text-center">
               <ImportQuestion
-                title={`${lang[`gl_${data}`]}`}
+                title={`${lang[`level${data}`]}`}
                 id={`level${data}`}
               />
             </div>
@@ -96,7 +96,7 @@ class ImportData extends Component {
           </div>
           <div>
             <Link className="btn blue" to={routes.Overview}>
-              {lang.overview}
+              {`Tổng quan`}
             </Link>
           </div>
         </div>

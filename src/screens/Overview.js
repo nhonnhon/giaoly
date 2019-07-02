@@ -32,13 +32,10 @@ class Overview extends Component {
     this.props.saveDataGroupAndPoints(groupAndPoint);
   }
 
-  clickMember = (key, groupName, level, totalPoint, currentMemberPoint) => {
+  clickMember = type => {
     this.props.setCurrentMember({
-      id: key,
-      groupName: groupName,
-      level: `level${level + 1}`,
-      totalPoint: totalPoint,
-      currentMemberPoint: currentMemberPoint
+      level: type,
+      currentGroup: this.state.currentGroup
     });
     this.props.history.push(routes.ListGroupQuestion);
   };
@@ -54,23 +51,35 @@ class Overview extends Component {
       <div className="level-to-select">
         <div className="row">
           <div className="col-6">
-            <div className="button-level" onClick={() => {}}>
-              <img src={khaitam} />
+            <div
+              className="button-level"
+              onClick={() => this.clickMember("level1")}
+            >
+              <img src={khaitam} alt="image1" />
             </div>
           </div>
           <div className="col-6">
-            <div className="button-level" onClick={() => {}}>
-              <img src={ruocle} />
+            <div
+              className="button-level"
+              onClick={() => this.clickMember("level2")}
+            >
+              <img src={ruocle} alt="image2" />
             </div>
           </div>
           <div className="col-6">
-            <div className="button-level" onClick={() => {}}>
-              <img src={themsuc} />
+            <div
+              className="button-level"
+              onClick={() => this.clickMember("level3")}
+            >
+              <img src={themsuc} alt="image3" />
             </div>
           </div>
           <div className="col-6">
-            <div className="button-level" onClick={() => {}}>
-              <img src={baodong} />
+            <div
+              className="button-level"
+              onClick={() => this.clickMember("level4")}
+            >
+              <img src={baodong} alt="image4" />
             </div>
           </div>
         </div>
@@ -84,7 +93,10 @@ class Overview extends Component {
     return (
       <div className="level-to-select d-flex justtifyContentCenter mt-20">
         {_.map(dataGroupPoint, (data, index) => (
-          <div className={`group-circle ${index === currentGroup && "active"}`}>
+          <div
+            key={index}
+            className={`group-circle ${index === currentGroup && "active"}`}
+          >
             <div onClick={() => this.changeGroup(index)}>{index + 1}</div>
           </div>
         ))}
