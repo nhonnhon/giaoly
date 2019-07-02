@@ -21,7 +21,8 @@ class ListGroupQuestion extends Component {
     listAllQuestion: PropTypes.any,
     currentMember: PropTypes.object,
     history: PropTypes.any,
-    timeAll: PropTypes.any
+    timeAll: PropTypes.any,
+    dataGroupPoint: PropTypes.array
   };
 
   constructor(props) {
@@ -34,7 +35,8 @@ class ListGroupQuestion extends Component {
       currentCorrect: "",
       currentGroupPoint: this.props.currentMember.totalPoint,
       currentMemberPoint: this.props.currentMember.currentMemberPoint,
-      timeAll: 0
+      timeAll: 0,
+      endTime: false
     };
   }
 
@@ -72,7 +74,7 @@ class ListGroupQuestion extends Component {
   handleTime = timeAll => {
     this.timeInterval = setInterval(() => {
       timeAll = timeAll - 1;
-      this.setState({ timeAll });
+      this.setState({ timeAll, endTime: timeAll < 80 });
     }, 1000);
   };
 
@@ -110,6 +112,14 @@ class ListGroupQuestion extends Component {
       alert("finish");
       return;
     }
+
+    const {
+      dataGroupPoint,
+      currentMember: { currentGroup, level }
+    } = this.props;
+    dataGroupPoint[currentGroup][level] = true;
+    localStorage.setItem(types.dataGroupPoint, JSON.stringify(dataGroupPoint));
+    this.props.saveDataGroupAndPoints(dataGroupPoint);
     this.setState({
       showListGroupQuestion: false,
       currentQuestion: listQuestion[randomNumber],
@@ -160,7 +170,12 @@ class ListGroupQuestion extends Component {
     const {
       currentMember: { currentGroup, level }
     } = this.props;
-    const { showListGroupQuestion, countQuestion, timeAll } = this.state;
+    const {
+      showListGroupQuestion,
+      countQuestion,
+      timeAll,
+      endTime
+    } = this.state;
     return (
       <div className="container">
         <div className={`${showListGroupQuestion ? "mt-40" : ""} mb-40 `}>
@@ -183,7 +198,9 @@ class ListGroupQuestion extends Component {
                     </span>
                   </h3>
                 </div>
-                <div className="time">{timeAll}</div>
+                <div className={`time ${endTime ? "end-time" : ""}`}>
+                  {timeAll}
+                </div>
               </div>
               <div>{this.showCurrentListQuestion()}</div>
             </div>

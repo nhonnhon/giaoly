@@ -39,10 +39,10 @@ class ImportData extends Component {
       for (let i = 0; i < amountGroup; i++) {
         const groupAndPoint = {};
         groupAndPoint.groupName = `group${i + 1}`;
-        groupAndPoint.khaitam = false;
-        groupAndPoint.ruocle = false;
-        groupAndPoint.themsuc = false;
-        groupAndPoint.baodong = false;
+        groupAndPoint.level1 = false;
+        groupAndPoint.level2 = false;
+        groupAndPoint.level3 = false;
+        groupAndPoint.level4 = false;
         arrGroupAndPoint.push(groupAndPoint);
       }
       localStorage.removeItem(dataGroupPoint);

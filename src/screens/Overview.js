@@ -26,16 +26,17 @@ class Overview extends Component {
   };
 
   componentDidMount() {
-    const groupAndPoint = JSON.parse(
+    const dataGroupPoint = JSON.parse(
       localStorage.getItem(types.dataGroupPoint)
     );
-    this.props.saveDataGroupAndPoints(groupAndPoint);
+    this.props.saveDataGroupAndPoints(dataGroupPoint);
   }
 
   clickMember = type => {
+    const { currentGroup } = this.state;
     this.props.setCurrentMember({
       level: type,
-      currentGroup: this.state.currentGroup
+      currentGroup: currentGroup
     });
     this.props.history.push(routes.ListGroupQuestion);
   };
@@ -47,37 +48,63 @@ class Overview extends Component {
   };
 
   renderLevel = () => {
+    const { dataGroupPoint } = this.props;
+    const { currentGroup } = this.state;
     return (
       <div className="level-to-select">
         <div className="row">
           <div className="col-6">
             <div
-              className="button-level"
-              onClick={() => this.clickMember("level1")}
+              className={`button-level ${
+                dataGroupPoint[currentGroup].level1 ? "finish" : ""
+              }`}
+              onClick={() =>
+                !dataGroupPoint[currentGroup].level1
+                  ? this.clickMember("level1")
+                  : {}
+              }
             >
               <img src={khaitam} alt="image1" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className="button-level"
-              onClick={() => this.clickMember("level2")}
+              className={`button-level ${
+                dataGroupPoint[currentGroup].level2 ? "finish" : ""
+              }`}
+              onClick={() =>
+                !dataGroupPoint[currentGroup].level2
+                  ? this.clickMember("level2")
+                  : {}
+              }
             >
               <img src={ruocle} alt="image2" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className="button-level"
-              onClick={() => this.clickMember("level3")}
+              className={`button-level ${
+                dataGroupPoint[currentGroup].level3 ? "finish" : ""
+              }`}
+              onClick={() =>
+                !dataGroupPoint[currentGroup].level3
+                  ? this.clickMember("level3")
+                  : {}
+              }
             >
               <img src={themsuc} alt="image3" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className="button-level"
-              onClick={() => this.clickMember("level4")}
+              className={`button-level ${
+                dataGroupPoint[currentGroup].level4 ? "finish" : ""
+              }`}
+              onClick={() =>
+                !dataGroupPoint[currentGroup].level4
+                  ? this.clickMember("level4")
+                  : {}
+              }
             >
               <img src={baodong} alt="image4" />
             </div>
@@ -120,7 +147,7 @@ class Overview extends Component {
               <div>
                 <div>{"Data chưa được nhập"}</div>
                 <div>
-                  <Link className="btn blue" to={routes.ImportData}>
+                  <Link className="btn blue" to={"/"}>
                     {lang.importData}
                   </Link>
                 </div>

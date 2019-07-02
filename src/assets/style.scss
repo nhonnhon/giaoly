@@ -27,6 +27,17 @@ $pink: pink;
   }
 }
 
+@keyframes showEndTime {
+  from {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
 body {
   margin: 0;
   font-size: 16px;
@@ -393,10 +404,14 @@ h1 {
     transform: scale(1);
     transition: transform linear 0.3s;
   }
-  &:hover {
+  &:hover:not(.finish) {
     img {
       transform: scale(1.2);
     }
+  }
+  &.finish {
+    opacity: 0.2;
+    cursor: no-drop;
   }
 }
 
@@ -429,4 +444,17 @@ h1 {
 .mw-800 {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+}
+
+.time {
+  font-size: 5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: $red;
+  font-weight: bold;
+  &.end-time {
+    animation: showEndTime 0.5s linear alternate-reverse infinite;
+  }
 }
