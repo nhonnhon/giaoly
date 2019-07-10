@@ -43,6 +43,7 @@ class ImportData extends Component {
         groupAndPoint.level2 = false;
         groupAndPoint.level3 = false;
         groupAndPoint.level4 = false;
+        groupAndPoint.listPass = [];
         arrGroupAndPoint.push(groupAndPoint);
       }
       localStorage.removeItem(dataGroupPoint);

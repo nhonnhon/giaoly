@@ -36,7 +36,8 @@ class ListGroupQuestion extends Component {
       currentGroupPoint: this.props.currentMember.totalPoint,
       currentMemberPoint: this.props.currentMember.currentMemberPoint,
       timeAll: 0,
-      endTime: false
+      endTime: false,
+      indexOfListQuestion: 0
     };
   }
 
@@ -64,17 +65,13 @@ class ListGroupQuestion extends Component {
     clearInterval(this.timeInterval);
   }
 
-  componentDidUpdate() {
-    const { listAllQuestion } = this.props;
-    const { level } = this.props.currentMember;
-    localStorage.removeItem(level);
-    localStorage.setItem(level, JSON.stringify(listAllQuestion));
-  }
-
   handleTime = timeAll => {
     this.timeInterval = setInterval(() => {
       timeAll = timeAll - 1;
-      this.setState({ timeAll, endTime: timeAll < 80 });
+      if (timeAll < 0) {
+        this.handleStopTime();
+      }
+      this.setState({ timeAll, endTime: timeAll < 10 });
     }, 1000);
   };
 
@@ -83,53 +80,88 @@ class ListGroupQuestion extends Component {
   };
 
   renderGroupQuestion = () => {
-    const { listAllQuestion } = this.props;
+    const {
+      listAllQuestion,
+      dataGroupPoint,
+      currentMember: { currentGroup }
+    } = this.props;
+    const { listPass } = dataGroupPoint[currentGroup];
     return (
       <div className="list-group-question">
         <h2 className="text-center">{"chủ đề"}</h2>
         <div className="row">
-          {_.map(listAllQuestion, (data, index) => (
-            <div className="col-6 mt-20 mb-20" key={index}>
-              <div
-                className="btn-question text-uppercase bold text-center"
-                onClick={() => {
-                  this.showQuestion(data.listQuestion);
-                }}
-              >
-                <h4>{lang[data.groupQuestionName]}</h4>
-              </div>
-            </div>
-          ))}
+          {_.map(
+            listAllQuestion,
+            ({ listQuestion, groupQuestionName }, index) => {
+              const checkListPass = listPass.includes(groupQuestionName);
+              return (
+                <div className="col-6 mt-20 mb-20" key={index}>
+                  <div
+                    className={`btn-question text-uppercase bold text-center ${
+                      checkListPass ? "finish" : ""
+                    }`}
+                    onClick={() =>
+                      !checkListPass
+                        ? this.showQuestion(
+                            listQuestion,
+                            groupQuestionName,
+                            index
+                          )
+                        : {}
+                    }
+                  >
+                    <h4>{lang[groupQuestionName]}</h4>
+                  </div>
+                </div>
+              );
+            }
+          )}
         </div>
       </div>
     );
   };
 
-  showQuestion = listQuestion => {
+  showQuestion = (listQuestion, groupQuestionName, index) => {
     const listLength = listQuestion.length;
     const randomNumber = Math.floor(Math.random() * listLength);
     if (listLength === 0) {
-      alert("finish");
-      return;
+      alert("Bộ câu hỏi đã hết");
+      this.props.history.push(routes.Overview);
     }
 
     const {
       dataGroupPoint,
+      listAllQuestion,
       currentMember: { currentGroup, level }
     } = this.props;
     dataGroupPoint[currentGroup][level] = true;
+    const { listPass } = dataGroupPoint[currentGroup];
+    if (groupQuestionName && listPass.indexOf(groupQuestionName) === -1) {
+      listPass.push(groupQuestionName);
+    }
     localStorage.setItem(types.dataGroupPoint, JSON.stringify(dataGroupPoint));
     this.props.saveDataGroupAndPoints(dataGroupPoint);
+    const currentQuestion = listQuestion[randomNumber];
+    const { id } = currentQuestion;
     this.setState({
       showListGroupQuestion: false,
-      currentQuestion: listQuestion[randomNumber],
-      currentListQuestion: listQuestion
+      currentQuestion: currentQuestion,
+      currentListQuestion: listQuestion,
+      indexOfListQuestion: index
     });
+    _.remove(listQuestion, data => data.id === id);
+    listAllQuestion[index].listQuestion = listQuestion;
+    localStorage.removeItem(level);
+    localStorage.setItem(level, JSON.stringify(listAllQuestion));
     this.handleTime(this.state.timeAll);
   };
 
   nextQuestion = () => {
-    const { currentListQuestion, countQuestion } = this.state;
+    const {
+      currentListQuestion,
+      countQuestion,
+      indexOfListQuestion
+    } = this.state;
     clearInterval(this.timeInterval);
     this.setState(
       {
@@ -137,28 +169,17 @@ class ListGroupQuestion extends Component {
         countQuestion: countQuestion + 1
       },
       () => {
-        this.showQuestion(currentListQuestion);
+        this.showQuestion(currentListQuestion, "", indexOfListQuestion);
       }
     );
   };
 
-  showCorrectQuestion = (id, correct) => {
-    const { currentListQuestion } = this.state;
-    _.remove(currentListQuestion, data => data.id === id);
-    this.setState({
-      currentListQuestion: currentListQuestion,
-      currentCorrect: correct
-    });
-  };
-
-  showCurrentListQuestion = () => {
+  renderQuestion = () => {
     const { currentQuestion, currentCorrect } = this.state;
-    const { id, correct } = currentQuestion;
     return (
       <ShowQuestion
         currentQuestion={currentQuestion}
         currentCorrect={currentCorrect}
-        showCorrectQuestion={() => this.showCorrectQuestion(id, correct)}
         nextQuestion={this.nextQuestion}
         handleStopTime={this.handleStopTime}
       />
@@ -167,9 +188,8 @@ class ListGroupQuestion extends Component {
 
   render() {
     console.log(this.props); // eslint-disable-line
-    const {
-      currentMember: { currentGroup, level }
-    } = this.props;
+    const { currentMember } = this.props;
+    const { currentGroup, level } = currentMember;
     const {
       showListGroupQuestion,
       countQuestion,
@@ -178,34 +198,34 @@ class ListGroupQuestion extends Component {
     } = this.state;
     return (
       <div className="container">
-        <div className={`${showListGroupQuestion ? "mt-40" : ""} mb-40 `}>
-          {showListGroupQuestion ? (
-            <div>
-              <h1 className="text-center">{`Chung sức cùng Giê Su`}</h1>
-              <div className="mt-20">{this.renderGroupQuestion()}</div>
+        {showListGroupQuestion ? (
+          <div>
+            <h1 className="text-center">{`Chung sức cùng Giê Su`}</h1>
+            <div className="mt-20">
+              {!_.isEmpty(currentMember) ? this.renderGroupQuestion() : ""}
             </div>
-          ) : (
-            <div>
-              <h1 className={`text-center mb-40`}>{_.toUpper(`Câu hỏi`)}</h1>
-              <div className="row alignCenter info-group mw-800 justifySpaceBetween">
-                <div className="d-flex">
-                  <h3>{`Đội: ${currentGroup + 1}`}</h3>
-                  <h3>{`Khối: ${lang[level]}`}</h3>
-                  <h3>
-                    {`Câu: `}
-                    <span className="text-white point-circle">
-                      {countQuestion}
-                    </span>
-                  </h3>
-                </div>
-                <div className={`time ${endTime ? "end-time" : ""}`}>
-                  {timeAll}
-                </div>
+          </div>
+        ) : (
+          <div>
+            <h1 className={`text-center mb-40`}>{_.toUpper(`Câu hỏi`)}</h1>
+            <div className="row alignCenter info-group mw-800 justifySpaceBetween">
+              <div className="d-flex">
+                <h3>{`Đội: ${currentGroup + 1}`}</h3>
+                <h3>{`Khối: ${lang[level]}`}</h3>
+                <h3>
+                  {`Câu: `}
+                  <span className="text-white point-circle">
+                    {countQuestion}
+                  </span>
+                </h3>
               </div>
-              <div>{this.showCurrentListQuestion()}</div>
+              <div className={`time ${endTime ? "end-time" : ""}`}>
+                {timeAll > 0 ? timeAll : "Hết giờ"}
+              </div>
             </div>
-          )}
-        </div>
+            <div>{this.renderQuestion()}</div>
+          </div>
+        )}
       </div>
     );
   }

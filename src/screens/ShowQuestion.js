@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import routes from "../configs/routes";
+import btnHome from "../assets/images/btnHome.png";
+import btnDapAn from "../assets/images/btnDapAn.png";
+import btnNext from "../assets/images/btnNext.png";
 
 class ShowQuestion extends Component {
   static propTypes = {
@@ -14,7 +17,7 @@ class ShowQuestion extends Component {
   };
 
   state = {
-    correct: {
+    listChoose: {
       a: "",
       b: "",
       c: "",
@@ -25,27 +28,36 @@ class ShowQuestion extends Component {
   showCorrectQuestion = choose => {
     const { correct } = this.props.currentQuestion;
     this.props.handleStopTime();
-    if (correct === choose) {
+    if (choose === "show") {
       this.setState({
-        correct: {
-          ...this.state.correct,
-          ...{ [choose]: "correct-answer" }
+        listChoose: {
+          ...this.state.listChoose,
+          ...{ [correct]: "correct-answer" }
         }
       });
     } else {
-      this.setState({
-        correct: {
-          ...this.state.correct,
-          ...{ [choose]: "error-answer" }
-        }
-      });
+      if (correct === choose) {
+        this.setState({
+          listChoose: {
+            ...this.state.listChoose,
+            ...{ [choose]: "correct-answer" }
+          }
+        });
+      } else {
+        this.setState({
+          listChoose: {
+            ...this.state.listChoose,
+            ...{ [choose]: "error-answer" }
+          }
+        });
+      }
     }
   };
 
   nextQuestion = () => {
     this.setState(
       {
-        correct: {
+        listChoose: {
           a: "",
           b: "",
           c: "",
@@ -59,10 +71,10 @@ class ShowQuestion extends Component {
   };
 
   render() {
-    const { currentQuestion, plusPointForMemberAndGroup } = this.props;
+    const { currentQuestion } = this.props;
 
     const { question, chooseA, chooseB, chooseC, chooseD } = currentQuestion;
-    const { a, b, c, d } = this.state.correct;
+    const { a, b, c, d } = this.state.listChoose;
     return (
       <div>
         <div className="mw-800">
@@ -96,60 +108,21 @@ class ShowQuestion extends Component {
             </div>
           </div>
         </div>
-        <div className="mt-40">
-          <div style={{ maxWidth: "250px", margin: "0 auto" }}>
-            <div className="row">
-              <div>
-                <input
-                  type="button"
-                  className="btn green"
-                  value={"+"}
-                  onClick={plusPointForMemberAndGroup}
-                />
-              </div>
-              <div>
-                <input
-                  type="button"
-                  className="btn blue"
-                  value={">>"}
-                  onClick={this.nextQuestion}
-                />
-              </div>
-              <div>
-                <Link className="btn blue" to={routes.Overview}>
-                  {"<<<"}
-                </Link>
-              </div>
+        <div className="row justtifyContentCenter mt-40">
+          <div>
+            <Link to={routes.Overview}>
+              <img className="btn-action" src={btnHome} alt="image1" />
+            </Link>
+          </div>
+          <div>
+            <div onClick={() => this.showCorrectQuestion("show")}>
+              <img className="btn-action" src={btnDapAn} alt="image2" />
             </div>
-            {/* {currentCorrect === "" ? (
-            <div>
-              <input
-                type="button"
-                className="btn green"
-                value={lang.answer}
-                onClick={showCorrectQuestion}
-              />
+          </div>
+          <div>
+            <div onClick={this.nextQuestion}>
+              <img className="btn-action" src={btnNext} alt="image3" />
             </div>
-          ) : (
-            <div className="row">
-              <div>
-                <input
-                  type="button"
-                  className="btn green"
-                  value={"+"}
-                  onClick={plusPointForMemberAndGroup}
-                />
-              </div>
-              <div>
-                <input
-                  type="button"
-                  className="btn blue"
-                  value={">>"}
-                  onClick={nextQuestion}
-                />
-              </div>
-            </div>
-          )} */}
           </div>
         </div>
       </div>

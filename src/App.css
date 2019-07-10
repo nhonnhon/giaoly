@@ -48,11 +48,15 @@ a {
     text-decoration: none; }
 
 .container {
-  max-width: 1138px;
+  width: 1138px;
   margin: 0 auto;
   padding-left: 15px;
   padding-right: 15px;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 650px;
   z-index: 2;
   padding-top: 50px; }
 
@@ -254,8 +258,11 @@ h1 {
     border: 2px solid #007bff; }
   .btn-question h4 {
     position: relative; }
-  .btn-question:hover:before {
+  .btn-question:hover:not(.finish):before {
     transform: scale(1.2); }
+  .btn-question.finish {
+    opacity: 0.2;
+    cursor: no-drop; }
 
 .list-group-question {
   max-width: 600px; }
@@ -348,5 +355,9 @@ h1 {
   font-weight: bold; }
   .time.end-time {
     animation: showEndTime 0.5s linear alternate-reverse infinite; }
+
+.btn-action {
+  width: 50px;
+  cursor: pointer; }
 
 /*# sourceMappingURL=App.css.map */
