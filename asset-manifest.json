@@ -1,15 +1,21 @@
 {
   "files": {
-    "main.css": "/giaoly/static/css/main.b47a5e47.chunk.css",
-    "main.js": "/giaoly/static/js/main.764d30ac.chunk.js",
-    "main.js.map": "/giaoly/static/js/main.764d30ac.chunk.js.map",
+    "main.css": "/giaoly/static/css/main.7e0a9bce.chunk.css",
+    "main.js": "/giaoly/static/js/main.ace468be.chunk.js",
+    "main.js.map": "/giaoly/static/js/main.ace468be.chunk.js.map",
     "runtime~main.js": "/giaoly/static/js/runtime~main.cb27eda2.js",
     "runtime~main.js.map": "/giaoly/static/js/runtime~main.cb27eda2.js.map",
-    "static/js/2.4f84f2d1.chunk.js": "/giaoly/static/js/2.4f84f2d1.chunk.js",
-    "static/js/2.4f84f2d1.chunk.js.map": "/giaoly/static/js/2.4f84f2d1.chunk.js.map",
+    "static/js/2.06b541b0.chunk.js": "/giaoly/static/js/2.06b541b0.chunk.js",
+    "static/js/2.06b541b0.chunk.js.map": "/giaoly/static/js/2.06b541b0.chunk.js.map",
     "index.html": "/giaoly/index.html",
-    "precache-manifest.53882c0f99d9f9b161d799b82e220d90.js": "/giaoly/precache-manifest.53882c0f99d9f9b161d799b82e220d90.js",
+    "precache-manifest.3740f7c655fc803c846fcac6c0f0ca85.js": "/giaoly/precache-manifest.3740f7c655fc803c846fcac6c0f0ca85.js",
     "service-worker.js": "/giaoly/service-worker.js",
-    "static/css/main.b47a5e47.chunk.css.map": "/giaoly/static/css/main.b47a5e47.chunk.css.map"
+    "static/css/main.7e0a9bce.chunk.css.map": "/giaoly/static/css/main.7e0a9bce.chunk.css.map",
+    "static/media/background.jpg": "/giaoly/static/media/background.c9a9593a.jpg",
+    "static/media/baodong.png": "/giaoly/static/media/baodong.0423feaf.png",
+    "static/media/btnDapAn.png": "/giaoly/static/media/btnDapAn.215c4013.png",
+    "static/media/khaitam.png": "/giaoly/static/media/khaitam.b59f8f72.png",
+    "static/media/ruocle.png": "/giaoly/static/media/ruocle.618083a9.png",
+    "static/media/themsuc.png": "/giaoly/static/media/themsuc.fb5546e7.png"
   }
 }
