@@ -47,66 +47,60 @@ class Overview extends Component {
     });
   };
 
-  renderLevel = () => {
+  checkFinishLevel = level => {
     const { dataGroupPoint } = this.props;
     const { currentGroup } = this.state;
+    return dataGroupPoint[currentGroup][level] ? "finish" : "";
+  };
+
+  checkOnClick = level => {
+    const { dataGroupPoint } = this.props;
+    const { currentGroup } = this.state;
+    return !dataGroupPoint[currentGroup][level] ? this.clickMember(level) : {};
+  };
+
+  renderLevel = () => {
     return (
       <div className="level-to-select">
         <div className="row">
           <div className="col-6">
             <div
-              className={`button-level ${
-                dataGroupPoint[currentGroup].level1 ? "finish" : ""
-              }`}
-              onClick={() =>
-                !dataGroupPoint[currentGroup].level1
-                  ? this.clickMember("level1")
-                  : {}
-              }
+              className={`button-level ${this.checkFinishLevel("level1")}`}
+              onClick={() => this.checkOnClick("level1")}
             >
               <img src={khaitam} alt="image1" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className={`button-level ${
-                dataGroupPoint[currentGroup].level2 ? "finish" : ""
-              }`}
-              onClick={() =>
-                !dataGroupPoint[currentGroup].level2
-                  ? this.clickMember("level2")
-                  : {}
-              }
+              className={`button-level ${this.checkFinishLevel("level2")}`}
+              onClick={() => this.checkOnClick("level2")}
             >
               <img src={ruocle} alt="image2" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className={`button-level ${
-                dataGroupPoint[currentGroup].level3 ? "finish" : ""
-              }`}
-              onClick={() =>
-                !dataGroupPoint[currentGroup].level3
-                  ? this.clickMember("level3")
-                  : {}
-              }
+              className={`button-level ${this.checkFinishLevel("level3_1")}`}
+              onClick={() => this.checkOnClick("level3_1")}
             >
-              <img src={themsuc} alt="image3" />
+              <img src={themsuc} alt="level3_1" />
             </div>
           </div>
           <div className="col-6">
             <div
-              className={`button-level ${
-                dataGroupPoint[currentGroup].level4 ? "finish" : ""
-              }`}
-              onClick={() =>
-                !dataGroupPoint[currentGroup].level4
-                  ? this.clickMember("level4")
-                  : {}
-              }
+              className={`button-level ${this.checkFinishLevel("level3_2")}`}
+              onClick={() => this.checkOnClick("level3_2")}
             >
-              <img src={baodong} alt="image4" />
+              <img src={themsuc} alt="level3_2" />
+            </div>
+          </div>
+          <div className="col-6">
+            <div
+              className={`button-level ${this.checkFinishLevel("level4")}`}
+              onClick={() => this.checkOnClick("level4")}
+            >
+              <img src={baodong} alt="level4" />
             </div>
           </div>
         </div>
@@ -118,7 +112,10 @@ class Overview extends Component {
     const { dataGroupPoint } = this.props;
     const { currentGroup } = this.state;
     return (
-      <div className="level-to-select d-flex justtifyContentCenter mt-20">
+      <div
+        className="level-to-select d-flex justtifyContentCenter"
+        style={{ marginTop: "90px" }}
+      >
         {_.map(dataGroupPoint, (data, index) => (
           <div
             key={index}
@@ -166,12 +163,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {
-  saveDataGroupAndPoints,
-  setCurrentMember
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    saveDataGroupAndPoints,
+    setCurrentMember
+  }
 )(withRouter(Overview));

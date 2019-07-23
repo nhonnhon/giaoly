@@ -28,26 +28,28 @@ class ListGroupQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      countQuestion: 0,
+      countQuestion: 1,
       showListGroupQuestion: true,
       currentListQuestion: [],
       currentQuestion: {},
       currentCorrect: "",
-      currentGroupPoint: this.props.currentMember.totalPoint,
-      currentMemberPoint: this.props.currentMember.currentMemberPoint,
       timeAll: 0,
       endTime: false,
-      indexOfListQuestion: 0
+      indexOfListQuestion: 0,
+      groupQuestionName: ""
     };
   }
 
   componentDidMount() {
     const { currentMember } = this.props;
+    const listLv = ["level3_1", "level3_2"];
     if (_.isEmpty(currentMember)) {
       this.props.history.push(routes.Overview);
     } else {
       const { level } = this.props.currentMember;
-      const listAllQuestion = JSON.parse(localStorage.getItem(level));
+      const listAllQuestion = JSON.parse(
+        localStorage.getItem(listLv.includes(level) ? "level3" : level)
+      );
       const groupAndPoint = JSON.parse(
         localStorage.getItem(types.dataGroupPoint)
       );
@@ -68,10 +70,10 @@ class ListGroupQuestion extends Component {
   handleTime = timeAll => {
     this.timeInterval = setInterval(() => {
       timeAll = timeAll - 1;
-      if (timeAll < 0) {
+      if (timeAll < 1) {
         this.handleStopTime();
       }
-      this.setState({ timeAll, endTime: timeAll < 10 });
+      this.setState({ timeAll, endTime: timeAll < 10 && timeAll > 0 });
     }, 1000);
   };
 
@@ -95,7 +97,7 @@ class ListGroupQuestion extends Component {
             ({ listQuestion, groupQuestionName }, index) => {
               const checkListPass = listPass.includes(groupQuestionName);
               return (
-                <div className="col-6 mt-20 mb-20" key={index}>
+                <div className="col-6 mt-10 mb-10" key={index}>
                   <div
                     className={`btn-question text-uppercase bold text-center ${
                       checkListPass ? "finish" : ""
@@ -127,28 +129,25 @@ class ListGroupQuestion extends Component {
     if (listLength === 0) {
       alert("Bộ câu hỏi đã hết");
       this.props.history.push(routes.Overview);
+      return;
     }
 
     const {
-      dataGroupPoint,
       listAllQuestion,
-      currentMember: { currentGroup, level }
+      currentMember: { level }
     } = this.props;
-    dataGroupPoint[currentGroup][level] = true;
-    const { listPass } = dataGroupPoint[currentGroup];
-    if (groupQuestionName && listPass.indexOf(groupQuestionName) === -1) {
-      listPass.push(groupQuestionName);
-    }
-    localStorage.setItem(types.dataGroupPoint, JSON.stringify(dataGroupPoint));
-    this.props.saveDataGroupAndPoints(dataGroupPoint);
+
     const currentQuestion = listQuestion[randomNumber];
     const { id } = currentQuestion;
     this.setState({
       showListGroupQuestion: false,
       currentQuestion: currentQuestion,
       currentListQuestion: listQuestion,
+      groupQuestionName: groupQuestionName,
       indexOfListQuestion: index
     });
+
+    //delete question when show
     _.remove(listQuestion, data => data.id === id);
     listAllQuestion[index].listQuestion = listQuestion;
     localStorage.removeItem(level);
@@ -156,11 +155,38 @@ class ListGroupQuestion extends Component {
     this.handleTime(this.state.timeAll);
   };
 
+  backList = () => {
+    this.setState({
+      showListGroupQuestion: true,
+      timeAll: this.props.timeAll
+    });
+    this.handleStopTime();
+  };
+
+  onDone = () => {
+    const { groupQuestionName } = this.state;
+    const {
+      dataGroupPoint,
+      currentMember: { currentGroup, level }
+    } = this.props;
+
+    //change level already test
+    dataGroupPoint[currentGroup][level] = true;
+    const { listPass } = dataGroupPoint[currentGroup];
+    if (groupQuestionName && listPass.indexOf(groupQuestionName) === -1) {
+      listPass.push(groupQuestionName);
+    }
+    localStorage.setItem(types.dataGroupPoint, JSON.stringify(dataGroupPoint));
+    this.props.saveDataGroupAndPoints(dataGroupPoint);
+    this.props.history.push(routes.Overview);
+  };
+
   nextQuestion = () => {
     const {
       currentListQuestion,
       countQuestion,
-      indexOfListQuestion
+      indexOfListQuestion,
+      groupQuestionName
     } = this.state;
     clearInterval(this.timeInterval);
     this.setState(
@@ -169,7 +195,11 @@ class ListGroupQuestion extends Component {
         countQuestion: countQuestion + 1
       },
       () => {
-        this.showQuestion(currentListQuestion, "", indexOfListQuestion);
+        this.showQuestion(
+          currentListQuestion,
+          groupQuestionName,
+          indexOfListQuestion
+        );
       }
     );
   };
@@ -182,6 +212,8 @@ class ListGroupQuestion extends Component {
         currentCorrect={currentCorrect}
         nextQuestion={this.nextQuestion}
         handleStopTime={this.handleStopTime}
+        backList={this.backList}
+        onDone={this.onDone}
       />
     );
   };
@@ -209,7 +241,7 @@ class ListGroupQuestion extends Component {
           <div>
             <h1 className={`text-center mb-40`}>{_.toUpper(`Câu hỏi`)}</h1>
             <div className="row alignCenter info-group mw-800 justifySpaceBetween">
-              <div className="d-flex">
+              <div className="d-flex mb-10">
                 <h3>{`Đội: ${currentGroup + 1}`}</h3>
                 <h3>{`Khối: ${lang[level]}`}</h3>
                 <h3>
@@ -220,7 +252,7 @@ class ListGroupQuestion extends Component {
                 </h3>
               </div>
               <div className={`time ${endTime ? "end-time" : ""}`}>
-                {timeAll > 0 ? timeAll : "Hết giờ"}
+                {timeAll}
               </div>
             </div>
             <div>{this.renderQuestion()}</div>
@@ -240,13 +272,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {
-  saveQuestionData,
-  saveDataGroupAndPoints,
-  saveTime
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    saveQuestionData,
+    saveDataGroupAndPoints,
+    saveTime
+  }
 )(ListGroupQuestion);

@@ -5,15 +5,17 @@ import routes from "../configs/routes";
 import btnHome from "../assets/images/btnHome.png";
 import btnDapAn from "../assets/images/btnDapAn.png";
 import btnNext from "../assets/images/btnNext.png";
+import btnBack from "../assets/images/btnBack.png";
+import btnDone from "../assets/images/btnDone.png";
 
 class ShowQuestion extends Component {
   static propTypes = {
-    currentCorrect: PropTypes.string,
     currentQuestion: PropTypes.object,
     showCorrectQuestion: PropTypes.func,
-    plusPointForMemberAndGroup: PropTypes.func,
     nextQuestion: PropTypes.func,
-    handleStopTime: PropTypes.func
+    handleStopTime: PropTypes.func,
+    backList: PropTypes.func,
+    onDone: PropTypes.func
   };
 
   state = {
@@ -109,20 +111,20 @@ class ShowQuestion extends Component {
           </div>
         </div>
         <div className="row justtifyContentCenter mt-40">
-          <div>
-            <Link to={routes.Overview}>
-              <img className="btn-action" src={btnHome} alt="image1" />
-            </Link>
+          <Link to={routes.Overview}>
+            <img className="btn-action" src={btnHome} alt="image1" />
+          </Link>
+          <div onClick={() => this.showCorrectQuestion("show")}>
+            <img className="btn-action" src={btnDapAn} alt="image2" />
           </div>
-          <div>
-            <div onClick={() => this.showCorrectQuestion("show")}>
-              <img className="btn-action" src={btnDapAn} alt="image2" />
-            </div>
+          <div onClick={this.nextQuestion}>
+            <img className="btn-action" src={btnNext} alt="image3" />
           </div>
-          <div>
-            <div onClick={this.nextQuestion}>
-              <img className="btn-action" src={btnNext} alt="image3" />
-            </div>
+          <div onClick={this.props.backList}>
+            <img className="btn-action" src={btnBack} alt="image4" />
+          </div>
+          <div onClick={this.props.onDone}>
+            <img className="btn-action" src={btnDone} alt="image5" />
           </div>
         </div>
       </div>

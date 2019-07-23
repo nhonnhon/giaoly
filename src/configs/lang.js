@@ -29,6 +29,8 @@ export const lang = {
   level1: "Khai tâm",
   level2: "Rước lễ",
   level3: "Thêm sức",
+  level3_1: "Thêm sức",
+  level3_2: "Thêm sức",
   level4: "Bao đồng",
 
   group1: "đội 1",
@@ -40,6 +42,7 @@ export const lang = {
   khoahocxahoi: "Khoa học \nxã hội",
   giaoly: "Giáo lý",
   dovuidomeo: "Đố vui \nđố mẹo",
+  tonghop: "Tổng hợp",
 
   //alert
   alertProvideData: "Dữ liệu chưa được nhập đầy đủ",

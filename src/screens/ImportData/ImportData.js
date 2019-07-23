@@ -41,7 +41,8 @@ class ImportData extends Component {
         groupAndPoint.groupName = `group${i + 1}`;
         groupAndPoint.level1 = false;
         groupAndPoint.level2 = false;
-        groupAndPoint.level3 = false;
+        groupAndPoint.level3_1 = false; //themsuc1
+        groupAndPoint.level3_2 = false; //themsuc2
         groupAndPoint.level4 = false;
         groupAndPoint.listPass = [];
         arrGroupAndPoint.push(groupAndPoint);
