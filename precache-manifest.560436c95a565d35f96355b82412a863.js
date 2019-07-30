@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dd5422f3fe412b5a26130d9f55fc33b0",
+    "revision": "3eb649d9689fafa6daf235f69da16edc",
     "url": "/giaoly/index.html"
   },
   {
-    "revision": "ba7703e66f8ccc353668",
-    "url": "/giaoly/static/css/main.a6187b40.chunk.css"
+    "revision": "2c72a1e393f1acd093d1",
+    "url": "/giaoly/static/css/main.ca9f27c0.chunk.css"
   },
   {
-    "revision": "eab7f183b95f6179878c",
-    "url": "/giaoly/static/js/2.35f9676a.chunk.js"
+    "revision": "a7d96b378c802514c331",
+    "url": "/giaoly/static/js/2.c0053fb1.chunk.js"
   },
   {
-    "revision": "ba7703e66f8ccc353668",
-    "url": "/giaoly/static/js/main.43fe6b0e.chunk.js"
+    "revision": "2c72a1e393f1acd093d1",
+    "url": "/giaoly/static/js/main.4b903519.chunk.js"
   },
   {
     "revision": "9f86d33e8d1b02d5694a",
@@ -22,6 +22,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "c9a9593a94385ea970af19a9276d8e53",
     "url": "/giaoly/static/media/background.c9a9593a.jpg"
+  },
+  {
+    "revision": "89fa09c5cc8da35692d71d28d54ce02a",
+    "url": "/giaoly/static/media/backgroundQuestion.89fa09c5.jpg"
   },
   {
     "revision": "0423feaf72de983727ba602f45032250",
