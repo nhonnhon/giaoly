@@ -29,4 +29,18 @@ function setCurrentMember(data) {
   };
 }
 
-export { saveDataGroupAndPoints, saveQuestionData, saveTime, setCurrentMember };
+function changeBG(data) {
+  console.log("change", data);
+  return {
+    type: types.BG_QUESTION,
+    payload: data
+  };
+}
+
+export {
+  saveDataGroupAndPoints,
+  saveQuestionData,
+  saveTime,
+  setCurrentMember,
+  changeBG
+};

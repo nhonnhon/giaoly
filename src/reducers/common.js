@@ -4,7 +4,8 @@ import {
   DATA_GROUP_POINT,
   SAVE_ALL_QUESTION,
   TIME_ALL,
-  CURRENT_MEMBER
+  CURRENT_MEMBER,
+  BG_QUESTION
 } from "../configs/constant";
 
 const initialState = fromJS({
@@ -14,7 +15,8 @@ const initialState = fromJS({
   },
   dataGroupPoint: [],
   listAllQuestion: {},
-  currentMember: {}
+  currentMember: {},
+  bgQuestion: false
 });
 
 function common(state = initialState, { type, payload }) {
@@ -30,6 +32,9 @@ function common(state = initialState, { type, payload }) {
 
     case CURRENT_MEMBER:
       return state.set("currentMember", payload);
+
+    case BG_QUESTION:
+      return state.set("bgQuestion", payload);
 
     default:
       return state;

@@ -4,35 +4,22 @@ import { connect } from "react-redux";
 // import PropTypes from "prop-types";
 // import { changeLanguage } from "./actions/index";
 import routes from "./configs/routes";
+import PropTypes from "prop-types";
 import "./App.css";
 import ImportData from "./screens/ImportData/ImportData";
 import Overview from "./screens/Overview";
 import ListGroupQuestion from "./screens/ListGroupQuestion";
 import background from "../src/assets/images/background.jpg";
+import backgroundQuestion from "../src/assets/images/backgroundQuestion.jpg";
 
 class App extends Component {
-  // static propTypes = {
-  //   changeLanguage: PropTypes.func,
-  //   language: PropTypes.string
-  // };
-
-  // state = {
-  //   lange: this.props.language
-  // };
-
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.language !== this.props.language) {
-  //     this.setState({
-  //       lange: this.props.language
-  //     });
-  //   }
-  // }
-
-  // onChangeLanguage = language => {
-  //   this.props.changeLanguage(language);
-  // };
+  static propTypes = {
+    bgQuestion: PropTypes.any
+  };
 
   render() {
+    const { bgQuestion } = this.props;
+    console.log("bgqe", bgQuestion);
     return (
       <div>
         <Router>
@@ -43,13 +30,23 @@ class App extends Component {
             component={ListGroupQuestion}
           />
         </Router>
-        <img className="backgroundImage" src={background} alt="image1" />
+        <img
+          className="backgroundImage"
+          src={bgQuestion ? backgroundQuestion : background}
+          alt="image1"
+        />
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    bgQuestion: state.common.toJS().bgQuestion
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   null
 )(App);

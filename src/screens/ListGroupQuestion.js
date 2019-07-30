@@ -7,10 +7,14 @@ import routes from "../configs/routes";
 import {
   saveQuestionData,
   saveDataGroupAndPoints,
-  saveTime
+  saveTime,
+  changeBG
 } from "../actions/index";
 import * as types from "../configs/constant";
 import ShowQuestion from "./ShowQuestion";
+
+import { Link } from "react-router-dom";
+import btnBack from "../assets/images/btnBack.png";
 
 class ListGroupQuestion extends Component {
   static propTypes = {
@@ -22,7 +26,8 @@ class ListGroupQuestion extends Component {
     currentMember: PropTypes.object,
     history: PropTypes.any,
     timeAll: PropTypes.any,
-    dataGroupPoint: PropTypes.array
+    dataGroupPoint: PropTypes.array,
+    changeBG: PropTypes.func
   };
 
   constructor(props) {
@@ -65,6 +70,7 @@ class ListGroupQuestion extends Component {
 
   componentWillUnmount() {
     clearInterval(this.timeInterval);
+    this.props.changeBG(false);
   }
 
   handleTime = timeAll => {
@@ -119,6 +125,11 @@ class ListGroupQuestion extends Component {
             }
           )}
         </div>
+        <div style={{ marginTop: "120px", marginLeft: "20px" }}>
+          <Link to={routes.Overview}>
+            <img className="btn-action" src={btnBack} alt="image1" />
+          </Link>
+        </div>
       </div>
     );
   };
@@ -134,18 +145,24 @@ class ListGroupQuestion extends Component {
 
     const {
       listAllQuestion,
-      currentMember: { level }
+      currentMember: { level },
+      changeBG
     } = this.props;
 
     const currentQuestion = listQuestion[randomNumber];
     const { id } = currentQuestion;
-    this.setState({
-      showListGroupQuestion: false,
-      currentQuestion: currentQuestion,
-      currentListQuestion: listQuestion,
-      groupQuestionName: groupQuestionName,
-      indexOfListQuestion: index
-    });
+    this.setState(
+      {
+        showListGroupQuestion: false,
+        currentQuestion: currentQuestion,
+        currentListQuestion: listQuestion,
+        groupQuestionName: groupQuestionName,
+        indexOfListQuestion: index
+      },
+      () => {
+        changeBG(true);
+      }
+    );
 
     //delete question when show
     _.remove(listQuestion, data => data.id === id);
@@ -156,10 +173,15 @@ class ListGroupQuestion extends Component {
   };
 
   backList = () => {
-    this.setState({
-      showListGroupQuestion: true,
-      timeAll: this.props.timeAll
-    });
+    this.setState(
+      {
+        showListGroupQuestion: true,
+        timeAll: this.props.timeAll
+      },
+      () => {
+        this.props.changeBG(false);
+      }
+    );
     this.handleStopTime();
   };
 
@@ -277,6 +299,7 @@ export default connect(
   {
     saveQuestionData,
     saveDataGroupAndPoints,
-    saveTime
+    saveTime,
+    changeBG
   }
 )(ListGroupQuestion);

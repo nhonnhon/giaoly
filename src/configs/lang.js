@@ -38,8 +38,8 @@ export const lang = {
   group3: "đội 3",
   group4: "đội 4",
 
-  vhnt: "Văn hoá \n nghệ thuật",
-  khoahocxahoi: "Khoa học \nxã hội",
+  vhnt: "Xã hội",
+  khoahocxahoi: "Khoa học \ntự nhiên",
   giaoly: "Giáo lý",
   dovuidomeo: "Đố vui \nđố mẹo",
   tonghop: "Tổng hợp",
