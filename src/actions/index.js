@@ -30,7 +30,6 @@ function setCurrentMember(data) {
 }
 
 function changeBG(data) {
-  console.log("change", data);
   return {
     type: types.BG_QUESTION,
     payload: data

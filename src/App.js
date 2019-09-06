@@ -19,7 +19,6 @@ class App extends Component {
 
   render() {
     const { bgQuestion } = this.props;
-    console.log("bgqe", bgQuestion);
     return (
       <div>
         <Router>
